@@ -97,13 +97,18 @@ class GifImage extends StatefulWidget{
   static GifCache cache = GifCache();
 }
 
-class GifImageState extends State<GifImage>{
+class GifImageState extends State<GifImage> {
   List<ImageInfo> _infos;
   int _curIndex = 0;
   bool _fetchComplete= false;
   ImageInfo get _imageInfo {
-    if(!_fetchComplete)return null;
-    return  _infos==null?null:_infos[_curIndex];
+    try {
+      if (!_fetchComplete) return null;
+      return _infos == null ? null : _infos[_curIndex];
+    }catch(e){
+
+
+    }
   }
 
 
@@ -171,27 +176,32 @@ class GifImageState extends State<GifImage>{
 
   @override
   Widget build(BuildContext context) {
-    final RawImage image = new RawImage(
-      image: _imageInfo?.image,
-      width: widget.width,
-      height: widget.height,
-      scale: _imageInfo?.scale ?? 1.0,
-      color: widget.color,
-      colorBlendMode: widget.colorBlendMode,
-      fit: widget.fit,
-      alignment: widget.alignment,
-      repeat: widget.repeat,
-      centerSlice: widget.centerSlice,
-      matchTextDirection: widget.matchTextDirection,
-    );
-    if (widget.excludeFromSemantics)
-      return image;
-    return new Semantics(
-      container: widget.semanticLabel != null,
-      image: true,
-      label: widget.semanticLabel == null ? '' : widget.semanticLabel,
-      child: image,
-    );
+    try {
+      final RawImage image = new RawImage(
+        image: _imageInfo?.image,
+        width: widget.width,
+        height: widget.height,
+        scale: _imageInfo?.scale ?? 1.0,
+        color: widget.color,
+        colorBlendMode: widget.colorBlendMode,
+        fit: widget.fit,
+        alignment: widget.alignment,
+        repeat: widget.repeat,
+        centerSlice: widget.centerSlice,
+        matchTextDirection: widget.matchTextDirection,
+      );
+      if (widget.excludeFromSemantics)
+        return image;
+      return new Semantics(
+        container: widget.semanticLabel != null,
+        image: true,
+        label: widget.semanticLabel == null ? '' : widget.semanticLabel,
+        child: image,
+      );
+    }catch(e){
+
+      print("erororororor");
+    }
   }
 }
 
